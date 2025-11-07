@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Core Meta -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>My Watchlist — MovieVault</title>
+    <meta name="description" content="Your saved watchlist — manage movies you plan to watch later." />
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body>
+    <header class="site-header">
+      <div class="container header-container">
+        <h1 class="logo">🎬 MovieVault</h1>
+        <nav class="nav-links">
+          <a href="index.html">Home</a>
+          <a href="watchlist.html" class="active">My Watchlist</a>
+          <button id="themeToggle" class="theme-toggle" aria-label="Toggle Theme" aria-pressed="false">🌙</button>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container main">
+      <section class="watchlist-section" aria-label="Saved movies">
+        <h2>My Watchlist</h2>
+
+        <!-- IMPORTANT: id matches script.js expectation -->
+        <div id="watchlist" class="results-grid" role="list" aria-live="polite">
+          <p class="placeholder">Your watchlist is empty 🍿</p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <small>
+          Built with ❤️ using
+          <a href="https://www.omdbapi.com/" target="_blank" rel="noopener noreferrer">OMDb API</a>
+        </small>
+      </div>
+    </footer>
+
+    <script src="script.js" defer></script>
+  </body>
+</html>

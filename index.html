@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Core Meta -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MovieVault — Find Your Movies</title>
+    <meta name="description" content="Search and save your favorite movies using OMDb API" />
+
+    <!-- Performance Hints -->
+    <link rel="preconnect" href="https://www.omdbapi.com" />
+    <link rel="preload" href="styles.css" as="style" />
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css" />
+
+    <!-- Favicons / SEO (optional) -->
+    <!-- <link rel="icon" href="assets/favicon.png" type="image/png" /> -->
+  </head>
+
+  <body>
+    <header class="site-header">
+      <div class="container header-container">
+        <h1 class="logo">🎬 MovieVault</h1>
+        <nav>
+          <a href="index.html" class="active">Home</a>
+          <a href="watchlist.html">My Watchlist</a>
+          <button id="themeToggle" class="theme-toggle" aria-label="Toggle Theme" aria-pressed="false">🌙</button>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="search-section" aria-label="Search movies">
+        <form id="searchForm" autocomplete="off" novalidate>
+          <input
+            id="searchInput"
+            type="search"
+            placeholder="Search movies..."
+            aria-label="Search for a movie"
+            required
+          />
+          <button type="submit" class="search-btn">Search</button>
+        </form>
+
+        <!-- Shown only if API key placeholder is still present -->
+        <div id="apiKeyWarning" class="placeholder" style="display:none; margin-top:.6rem; color:#b01;">
+          ⚠️ Replace <code>API_KEY</code> in <code>script.js</code> with your OMDb API key.
+        </div>
+      </section>
+
+      <section aria-label="Search results">
+        <div id="message" role="status" class="message" aria-live="polite"></div>
+
+        <!-- Loading Spinner (hidden by default via [hidden]) -->
+        <div id="spinner" class="spinner" hidden aria-hidden="true" aria-label="Loading">
+          <div class="dot1"></div>
+          <div class="dot2"></div>
+          <div class="dot3"></div>
+        </div>
+
+        <!-- Results grid acts like a list for SRs -->
+        <div id="results" class="movie-grid" role="list" aria-live="polite">
+          <p class="placeholder">Search for your favorite movies 🎥</p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <small>
+          Powered by
+          <a href="https://www.omdbapi.com/" target="_blank" rel="noopener noreferrer">OMDb API</a>
+        </small>
+      </div>
+    </footer>
+
+    <script src="script.js" defer></script>
+  </body>
+</html>
