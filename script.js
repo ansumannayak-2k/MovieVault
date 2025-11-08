@@ -247,58 +247,55 @@ function renderWatchlist() {
   if (!watchlistContainer) return;
   const list = readWatchlist();
   if (!list.length) {
-    watchlistContainer.innerHTML = `
-      <section class="watchlist-empty">
-        <h1>My Watchlist</h1>
-        <p class="placeholder">Your watchlist is empty 🍿</p>
-      </section>`;
+    watchlistContainer.innerHTML = `<p class="placeholder">Your watchlist is empty 🍿</p>`;
     return;
   }
 
-  watchlistContainer.innerHTML = `
-    <section class="watchlist-grid">
-      <h1>My Watchlist</h1>
-      <div class="movie-grid" role="list">
-        ${list
-          .map((m) => {
-            const poster = m.Poster && m.Poster !== "N/A" ? m.Poster : "./assets/placeholder.png";
-            return `
-            <div class="movie-card" role="listitem" tabindex="0">
-              <img
-                src="${poster}"
-                alt="${escapeHtml(m.Title)} poster"
-                class="movie-poster"
-                loading="lazy"
-                decoding="async"
-                width="300" height="450"
-              />
-              <div class="movie-info">
-                <h3 class="movie-title">${escapeHtml(m.Title)}</h3>
-                <p class="movie-meta">${escapeHtml(m.Year || "—")}</p>
-                <button class="remove-btn" data-id="${m.imdbID}" aria-label="Remove ${escapeHtml(m.Title)} from Watchlist">❌ Remove</button>
-              </div>
-            </div>`;
-          })
-          .join("")}
-      </div>
-      <div style="margin-top:1rem;">
-        <button id="clearWatchlistBtn" class="favorite-btn">Clear Watchlist</button>
-      </div>
-    </section>
-  `;
+  // Render movie cards directly into the container (which already has results-grid class)
+  watchlistContainer.innerHTML = list
+    .map((m) => {
+      const poster = m.Poster && m.Poster !== "N/A" ? m.Poster : "./assets/placeholder.png";
+      return `
+      <div class="movie-card" role="listitem" tabindex="0">
+        <img
+          src="${poster}"
+          alt="${escapeHtml(m.Title)} poster"
+          class="movie-poster"
+          loading="lazy"
+          decoding="async"
+          width="300" height="450"
+        />
+        <div class="movie-info">
+          <h3 class="movie-title">${escapeHtml(m.Title)}</h3>
+          <p class="movie-meta">${escapeHtml(m.Year || "—")}</p>
+          <button class="remove-btn" data-id="${m.imdbID}" aria-label="Remove ${escapeHtml(m.Title)} from Watchlist">❌ Remove</button>
+        </div>
+      </div>`;
+    })
+    .join("");
 
+  // Add clear button after the movie grid
+  const clearBtnContainer = document.createElement("div");
+  clearBtnContainer.style.marginTop = "1rem";
+  clearBtnContainer.style.textAlign = "center";
+  const clearBtn = document.createElement("button");
+  clearBtn.id = "clearWatchlistBtn";
+  clearBtn.className = "favorite-btn";
+  clearBtn.textContent = "Clear Watchlist";
+  clearBtn.addEventListener("click", () => {
+    if (!confirm("Clear all watchlist items?")) return;
+    clearWatchlist();
+  });
+  clearBtnContainer.appendChild(clearBtn);
+  watchlistContainer.appendChild(clearBtnContainer);
+
+  // Wire up remove buttons
   watchlistContainer.querySelectorAll(".remove-btn").forEach((btn) => {
     btn.addEventListener("click", (e) => {
       const id = e.currentTarget.dataset.id;
       if (!id) return;
       removeFromWatchlist(id);
     });
-  });
-
-  const clearBtn = document.getElementById("clearWatchlistBtn");
-  clearBtn && clearBtn.addEventListener("click", () => {
-    if (!confirm("Clear all watchlist items?")) return;
-    clearWatchlist();
   });
 }
 window.renderWatchlist = renderWatchlist;
